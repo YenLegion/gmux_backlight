@@ -1,0 +1,37 @@
+#! /usr/bin/env python3
+#
+# -*- coding: utf-8 -*-
+# Copyright 2015 Alex Woroschilow (alex.woroschilow@gmail.com)
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+# http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+import os
+import sys
+
+brightness_max = "/sys/class/backlight/intel_backlight/max_brightness"
+brightness_current = "/sys/class/backlight/intel_backlight/actual_brightness"
+apple_backlight = "/sys/class/backlight/gmux_backlight/brightness"
+apple_max = "/sys/class/backlight/gmux_backlight/max_brightness"
+
+if not os.path.exists(apple_max): sys.exit()
+if not os.path.exists(apple_backlight): sys.exit()
+if not os.path.exists(brightness_current): sys.exit()
+if not os.path.exists(brightness_max): sys.exit()
+
+brightness_current = int(open(brightness_current, 'r').read())
+brightness_max = int(open(brightness_max, 'r').read())
+apple_max = int(open(apple_max, 'r').read())
+
+
+intel_percent = brightness_current / brightness_max * 100
+
+with open(apple_backlight, 'w', errors='ignore') as stream:
+	stream.write('{:>.0f}'.format(intel_percent / 100 * apple_max))
+

@@ -1,0 +1,8 @@
+ACTION=="change", SUBSYSTEM=="backlight", KERNEL=="intel_backlight", RUN+="/etc/gmux/gmux_intel"
+ACTION=="change", SUBSYSTEM=="backlight", KERNEL=="rpi_backlight", RUN+="/etc/gmux/gmux_rpi"
+ACTION=="change", SUBSYSTEM=="backlight", KERNEL=="radeon_bl0", RUN+="/etc/gmux/gmux_radeon"
+ACTION=="change", SUBSYSTEM=="backlight", KERNEL=="nvidia_backlight"", RUN+="/etc/gmux/gmux_nvidia"
+ACTION=="change", SUBSYSTEM=="backlight", KERNEL=="nv_backlight"", RUN+="/etc/gmux/gmux_nv"
+
+
+
